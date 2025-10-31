@@ -1,0 +1,30 @@
+@AbapCatalog.viewEnhancementCategory: [#NONE]
+@AccessControl.authorizationCheck: #NOT_REQUIRED
+@EndUserText.label: 'Flight'
+@Metadata.ignorePropagatedAnnotations: true
+@ObjectModel.usageType:{
+    serviceQuality: #X,
+    sizeCategory: #S,
+    dataClass: #MIXED
+}
+define root view entity zFlSflight
+  as select from sflight
+  composition [0..*] of zFlSbook as sbook
+{
+  key cast(carrid as s_carr_id preserving type )     as AirLineID,
+  key cast(connid as s_conn_id preserving type )     as ConnectionID,
+  key fldate                                         as FlightDate,
+      @Semantics.amount.currencyCode: 'Currency'
+      price                                          as Price,
+      cast(currency as s_currcode preserving type )  as Currency,
+      cast(planetype as s_planetye preserving type ) as Planetype,
+      seatsmax                                       as Seatsmax,
+      seatsocc                                       as Seatsocc,
+      @Semantics.amount.currencyCode: 'Currency'
+      paymentsum                                     as Paymentsum,
+      seatsmax_b                                     as SeatsmaxB,
+      seatsocc_b                                     as SeatsoccB,
+      seatsmax_f                                     as SeatsmaxF,
+      seatsocc_f                                     as SeatsoccF,
+      sbook
+}

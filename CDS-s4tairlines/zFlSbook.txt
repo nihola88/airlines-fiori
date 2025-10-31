@@ -1,0 +1,57 @@
+@AbapCatalog.viewEnhancementCategory: [#NONE]
+@AccessControl.authorizationCheck: #NOT_REQUIRED
+@EndUserText.label: 'Sbook Table'
+@Metadata.ignorePropagatedAnnotations: true
+@ObjectModel.usageType:{
+    serviceQuality: #X,
+    sizeCategory: #S,
+    dataClass: #MIXED
+}
+@OData.publish: true
+@ObjectModel.updateEnabled: true
+@ObjectModel.createEnabled: true 
+@ObjectModel.deleteEnabled: true
+@ObjectModel.action: [{enabled: true}]
+define view entity zFlSbook
+  as select from sbook
+  association        to parent zFlSflight as sflight on  $projection.Carrid = sflight.AirLineID
+                                                     and $projection.Connid = sflight.ConnectionID
+                                                     and $projection.Fldate = sflight.FlightDate
+  association [0..1] to zFlScustom        as scustom on  $projection.Customid = scustom.CustomerId
+  association [0..1] to zsbook_rating     as rating  on  $projection.Carrid = rating.carrid
+                                                     and $projection.Connid = rating.connid
+                                                     and $projection.Fldate = rating.fldate
+                                                     and $projection.Bookid = rating.bookid
+{
+  key cast(carrid as s_carr_id preserving type )           as Carrid,
+  key cast(connid as s_conn_id preserving type )           as Connid,
+  key cast(fldate as s_date preserving type )              as Fldate,
+  key cast(bookid as s_book_id preserving type )           as Bookid,
+      cast(sbook.customid as s_customer preserving type )  as Customid,
+      sbook.custtype                                       as Custtype,
+      sbook.smoker                                         as Smoker,
+      @Semantics.quantity.unitOfMeasure: 'Wunit'
+      sbook.luggweight                                     as Luggweight,
+      cast(sbook.wunit as s_weiunit preserving type )      as Wunit,
+      sbook.invoice                                        as Invoice,
+      sbook.class                                          as Class,
+      @Semantics.amount.currencyCode: 'Forcurkey'
+      sbook.forcuram                                       as Forcuram,
+      cast( sbook.forcurkey as s_curr preserving type )    as Forcurkey,
+      @Semantics.amount.currencyCode: 'Loccurkey'
+      sbook.loccuram                                       as Loccuram,
+      cast(sbook.loccurkey as s_currcode preserving type ) as Loccurkey,
+      cast(sbook.order_date as char10)                     as OrderDate,
+      cast(sbook.counter as s_countnum preserving type )   as Counter,
+      cast(sbook.agencynum as s_agncynum preserving type ) as Agencynum,
+      sbook.cancelled                                      as Cancelled,
+      sbook.reserved                                       as Reserved,
+      sbook.passname                                       as Passname,
+      sbook.passform                                       as Passform,
+      sbook.passbirth                                      as Passbirth,
+      sflight, // Make association public
+      scustom,
+      @ObjectModel.createEnabled: true
+      @ObjectModel.readOnly: false
+      rating.rating                                        as Rating
+}

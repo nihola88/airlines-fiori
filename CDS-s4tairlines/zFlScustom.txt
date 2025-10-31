@@ -1,0 +1,29 @@
+@AccessControl.authorizationCheck: #NOT_REQUIRED
+@Search.searchable: true
+@EndUserText.label: 'Scustom Table'
+define view entity zFlScustom
+  as select from scustom
+  association [0..*] to zFlSbook as zFlSbook   on $projection.CustomerId = zFlSbook.Customid
+{
+      @Search:{defaultSearchElement: true,fulltextIndex.required: false, fuzzinessThreshold: 0.7}
+  key cast( scustom.id as s_customer preserving type ) as CustomerId,
+      @Search:{defaultSearchElement: true,fulltextIndex:{required: false}, fuzzinessThreshold: 0.7}
+      scustom.name                                     as Name,
+      scustom.form                                     as Form,
+      scustom.street                                   as Street,
+      scustom.postbox                                  as Postbox,
+      scustom.postcode                                 as Postcode,
+      scustom.city                                     as City,
+      @Consumption.valueHelp: 'Country'
+      @Consumption.valueHelpDefault.display: true
+      @Consumption.valueHelpDefinition: [{ entity: { name: 'zT005', element: 'Country' } }]
+      scustom.country                                  as Country,
+      scustom.region                                   as Region,
+      scustom.telephone                                as Telephone,
+      scustom.custtype                                 as Custtype,
+      scustom.discount                                 as Discount,
+      cast(scustom.langu as spras preserving type )    as Langu,
+      scustom.email                                    as Email,
+      scustom.webuser                                  as Webuser,
+      zflsbook // Make association public
+}
