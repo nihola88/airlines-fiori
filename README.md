@@ -10,3 +10,6 @@ Other Features:
 - Use of Sync/Async OData calls
 - Use of public APIs (i.e. a GET to guess a person's sex from name
 - Use of SAP Icons and images from web
+
+## Note
+This is a demonstration project with anonymized/sample data. 
