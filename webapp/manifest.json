@@ -1,0 +1,197 @@
+{
+  "_version": "1.60.0",
+  "sap.app": {
+    "id": "s4tairlines.s4tairlines",
+    "type": "application",
+    "i18n": "i18n/i18n.properties",
+    "applicationVersion": {
+      "version": "0.0.1"
+    },
+    "title": "{{appTitle}}",
+    "description": "{{appDescription}}",
+    "resources": "resources.json",
+    "sourceTemplate": {
+      "id": "@sap/generator-fiori:basic",
+      "version": "1.15.7",
+      "toolsId": "599fa33a-60d5-40c7-b3aa-d87092c4ae57"
+    },
+    "dataSources": {
+      "S4TOData": {
+        "uri": "/sap/opu/odata/sap/ZTEST_FLIGHTS_NV_SRV/",
+        "type": "OData",
+        "settings": {
+          "annotations": [],
+          "localUri": "localService/metadata.xml",
+          "odataVersion": "2.0"
+        }
+      },
+      "protoModel":{
+        "uri": "model/Models.json",
+        "type": "JSON"
+      }
+    },
+    "crossNavigation": {
+      "inbounds": {
+        "test_airlines-input": {
+          "semanticObject": "test_airlines",
+          "action": "input",
+          "title": "{{flpTitle}}",
+          "subTitle": "{{flpSubtitle}}",
+          "signature": {
+            "parameters": {},
+            "additionalParameters": "allowed"
+          }
+        }
+      }
+    }
+  },
+  "sap.ui": {
+    "technology": "UI5",
+    "icons": {
+      "icon": "",
+      "favIcon": "",
+      "phone": "",
+      "phone@2": "",
+      "tablet": "",
+      "tablet@2": ""
+    },
+    "deviceTypes": {
+      "desktop": true,
+      "tablet": true,
+      "phone": true
+    }
+  },
+  "sap.ui5": {
+    "flexEnabled": true,
+    "dependencies": {
+      "minUI5Version": "1.120.0",
+      "libs": {
+        "sap.m": {},
+        "sap.ui.core": {}
+      }
+    },
+    "contentDensities": {
+      "compact": true,
+      "cozy": true
+    },
+    "models": {
+      "i18n": {
+        "type": "sap.ui.model.resource.ResourceModel",
+        "settings": {
+          "bundleName": "s4tairlines.s4tairlines.i18n.i18n"
+        }
+      },
+      "S4TOData": {
+        "dataSource": "S4TOData",
+        "preload": true,
+        "settings": {}
+      },
+      "protoModel":{
+        "type": "sap.ui.model.json.JSONModel",
+        "dataSource": "protoModel",
+        "preload": true
+      }
+    },
+    "resources": {
+      "css": [
+        {
+          "uri": "css/style.css"
+        }
+      ]
+    },
+    "routing": {
+      "config": {
+        "routerClass": "sap.m.routing.Router",
+        "controlAggregation": "pages",
+        "controlId": "app",
+        "transition": "slide",
+        "type": "View",
+        "viewType": "XML",
+        "path": "s4tairlines.s4tairlines.view",
+        "async": true,
+        "viewPath": "s4tairlines.s4tairlines.view"
+      },
+      "routes": [
+        {
+          "name": "RouteApp",
+          "pattern": "",
+          "target": [
+            "TargetApp"
+          ]
+        },
+        {
+          "name": "RouteAirlines",
+          "pattern": "Airlines",
+          "target": [
+            "TargetAirlines"
+          ]
+        },
+        {
+          "name": "RouteConnections",
+          "pattern": "Connections/:?pSpfli:",
+          "target": [
+            "TargetConnections"
+          ]
+        },
+        {
+          "name": "RouteCustomer",
+          "pattern": "Connections/:Customer:",
+          "target": [
+            "TargetCustomer"
+          ]
+        },
+        {
+          "name": "RouteCustomers",
+          "pattern": "Customers",
+          "target": [
+            "TargetCustomers"
+          ]
+        },
+        {
+          "name": "RouteCompanies",
+          "pattern": "Companies",
+          "target": [
+            "TargetCompanies"
+          ]
+        }
+      ],
+      "targets": {
+        "TargetApp": {
+          "viewId": "app",
+          "viewName": "App",
+          "level":1
+        },
+        "TargetAirlines": {
+          "viewId": "airlines",
+          "viewName": "Airlines",
+          "level":2
+        },
+        "TargetConnections": {
+          "viewId": "Connections",
+          "viewName": "Connections",
+          "level":3
+        },
+        "TargetCustomer": {
+          "viewId": "Customer",
+          "viewName": "Customer",
+          "level":3
+        },
+        "TargetCustomers": {
+          "viewId": "Customers",
+          "viewName": "Customers",
+          "level":3
+        },
+        "TargetCompanies": {
+          "viewId": "companies",
+          "viewName": "Companies",
+          "level":3
+        }
+      }
+    },
+    "rootView": {
+      "viewName": "s4tairlines.s4tairlines.view.App",
+      "type": "XML",
+      "id": "App"
+    }
+  }
+}

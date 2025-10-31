@@ -1,0 +1,39 @@
+<mvc:View xmlns:core="sap.ui.core" controllerName="s4tairlines.s4tairlines.controller.Companies" 
+    displayBlock="true"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m">
+<Page id="companies" >
+<Button text="Open Debug" press="openDebugger"></Button>
+<headerContent>
+    
+    <HeaderContainer >
+        <ToolbarSpacer />
+        <Toolbar active="true" style="Clear" design="Solid">
+            <Button text="New Airline" type="Accept" tooltip="Add" icon="sap-icon://create" press="onAdd"></Button>
+        </Toolbar>
+    </HeaderContainer>
+        </headerContent>
+    <Table id="tabScarr" items="{S4TOData>/ScarrSet}" selectionChange="onSelChange" >
+        <columns>
+            <Column > <Label text="Airline Name"></Label></Column>
+            <Column > <Label text="WebSite"></Label></Column>
+            <Column > <Label text="Currency"></Label></Column>
+            <Column ><Label text="Azione"></Label></Column>
+        </columns>
+        <items>
+            <ColumnListItem >
+                <cells>
+                    <Text text="{S4TOData>Carrname}"></Text>
+                    <Link text="{i18n>Url} {S4TOData>Carrid}" href="{S4TOData>Url}" target="_blank"></Link>
+                    <Text text="{S4TOData>Currcode}"></Text>
+                    <HBox >
+                        <Button icon="sap-icon://edit" press="onEditScarr"></Button>
+                        <Button icon="sap-icon://delete" press="onDelScarr"></Button>
+                    </HBox>
+                </cells>
+            </ColumnListItem>
+            
+        </items>
+    </Table>
+    </Page>
+</mvc:View>

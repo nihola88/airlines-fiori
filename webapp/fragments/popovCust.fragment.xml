@@ -1,0 +1,8 @@
+<core:FragmentDefinition
+xmlns="sap.m"
+xmlns:core="sap.ui.core" >
+<HBox class="sapUiSmallMargin"><core:Icon src="sap-icon://person-placeholder"></core:Icon><Text text=" {customer>/Name}"></Text></HBox>
+<HBox class="sapUiSmallMargin"><core:Icon src="sap-icon://addresses"></core:Icon><Text text=" {customer>/Street}, {customer>/Postcode}, {customer>/City} - {customer>/Country}"></Text></HBox>
+<HBox class="sapUiSmallMargin"><core:Icon src="sap-icon://call"></core:Icon><Text text=" {customer>/Telephone}"></Text></HBox>
+<HBox class="sapUiSmallMargin"><core:Icon src="sap-icon://email"></core:Icon><Text text=" {customer>/Email}"></Text></HBox>
+</core:FragmentDefinition>

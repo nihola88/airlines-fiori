@@ -1,0 +1,130 @@
+<mvc:View xmlns:form="sap.ui.layout.form"
+          xmlns:f="sap.f"
+          xmlns:feeds="sap.viz.ui5.controls.common.feeds"
+          xmlns:layout="sap.ui.layout"
+          xmlns:data="sap.viz.ui5.data"
+          xmlns:controls="sap.viz.ui5.controls"
+          xmlns:statusindicator="sap.suite.ui.commons.statusindicator"
+          xmlns:chart="sap.chart"
+          xmlns:commons="sap.suite.ui.commons"
+          xmlns:core="sap.ui.core"
+          xmlns:mvc="sap.ui.core.mvc"
+          xmlns="sap.m"
+          controllerName="s4tairlines.s4tairlines.controller.App"
+          displayBlock="true">
+	<App id="app"
+	     homeIcon="sap-icon://puzzle">
+		<Page>
+			<Button text="Open Debugger"
+			        press="onOpenDebug"/>
+			<Toolbar>
+				<content>
+					<ToolbarSpacer/>
+					<Label text="{i18n>Language}"/>
+					<Select id="selLang"
+					        items="{ path: '/availableLang' }"
+					        forceSelection="true"
+					        change="onChangeLang">
+						<core:ListItem key="{key}"
+						               icon="{path: 'icon' }"
+						               text="{language}"/>
+					</Select>
+				</content>
+			</Toolbar>
+			<GenericTile id="tileAirlines"
+			             press="onPressComp"
+			             class="sapUiSmallMargin tileLayout"
+			             header="{i18n>Airlines}">
+				<TileContent id="tileAirCont">
+					<ImageContent src="sap-icon://building"/>
+				</TileContent>
+			</GenericTile>
+			<GenericTile id="tileFlights"
+			             press="onPress"
+			             class="sapUiSmallMargin tileLayout"
+			             header="{i18n>flights}">
+				<TileContent id="tileFlCont">
+					<ImageContent src="sap-icon://flight"/>
+				</TileContent>
+			</GenericTile>
+			<GenericTile id="tileCustomers"
+			             press="onPressCust"
+			             class="sapUiSmallMargin tileLayout"
+			             header="{i18n>Customers}">
+				<TileContent id="tileCustCont">
+					<ImageContent src="sap-icon://person-placeholder"/>
+				</TileContent>
+			</GenericTile>
+			<commons:ChartContainer showFullScreen="false" title="{i18n>ChartTitle}" autoAdjustHeight="true"  >
+				<commons:content>
+					<commons:ChartContainerContent icon="sap-icon://flight" title="{i18n>ChartTitle}" >
+						<commons:content >
+							<controls:VizFrame id="vizFrame"  renderComplete="onVizFrameLoaded"
+                                               vizProperties="{ 
+                                                        general: { background: { color: '#fff9e7' } },
+                                                        plotArea: { background: { color: '#fdebb5' } }
+                                                                   }"
+                                                vizScales="{
+                                                        color: {
+                                                                palette: ['#000000', '#F5BCB4', '#efc76c', '#EACF5E', '#F9AD79', '#D16A7C', '#8873A2',
+                                                                    '#3A95B3', '#B6D949', '#FDD36C', '#F47958', '#A65084', '#0063B1', '#0DA841', 
+                                                                    '#FCB71D', '#F05620', '#B22D6E', '#3C368E', '#8FB2CF', '#95D4AB', '#EAE98F', 
+                                                                    '#F9BE92', '#EC9A99', '#BC98BD', '#1EB7B2', '#73C03C', '#F48323', '#EB271B', 
+                                                                    '#D9B5CA', '#AED1DA', '#DFECB2', '#FCDAB0', '#F5BCB4'
+                                                                ]
+                                                        }
+                                                        }"
+							                   vizType="column">
+								<controls:dataset>
+									<data:FlattenedDataset data="{ path: '/'}">
+										<data:dimensions>
+											<data:DimensionDefinition name="Airline"
+											                          value="{Carrid}"/>
+										</data:dimensions>
+										<data:dimensions>
+											<data:DimensionDefinition name="Flight"
+											                          value="{Connid}"/>
+										</data:dimensions>
+										<!-- <data:dimensions>
+                                                    <data:DimensionDefinition name="Country" value="{Countryfr}"></data:DimensionDefinition>
+                                                </data:dimensions> -->
+										<data:measures>
+											<data:MeasureDefinition name="SeatsOcc"
+											                        value="{PercOccupied}"
+											                        range="[0,100]"/>
+										</data:measures>
+										<data:measures>
+											<data:MeasureDefinition name="AvPrice (hundreds $)"
+											                        value="{AvPrice}"
+											                        range="[0,500]"
+                                                                    unit="$" format="{ color: 0 }"/>
+										</data:measures>
+									</data:FlattenedDataset>
+								</controls:dataset>
+								<controls:feeds>
+									<feeds:FeedItem id='valueCategoryConnection'
+									                uid="categoryAxis"
+									                type="Dimension"
+									                values="Airline"/>
+									<feeds:FeedItem id='valueCategoryFlight'
+									                uid="categoryAxis"
+									                type="Dimension"
+									                values="Flight"/>
+									<!-- <feeds:FeedItem id='valueCategoryCountry' uid="color" type="Dimension" values="Country" /> -->
+									<feeds:FeedItem id='valueAxisFeed'
+									                uid="valueAxis"
+									                type="Measure"
+									                values="SeatsOcc" />
+									<feeds:FeedItem id='valueAxisPriceFeed'
+									                uid="valueAxis"
+									                type="Measure"
+									                values="AvPrice (hundreds $)" />
+								</controls:feeds>
+							</controls:VizFrame>
+						</commons:content>
+					</commons:ChartContainerContent>
+				</commons:content>
+			</commons:ChartContainer>
+		</Page>
+	</App>
+</mvc:View>

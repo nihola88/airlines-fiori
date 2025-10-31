@@ -1,0 +1,36 @@
+<mvc:View xmlns:launchpad="sap.ushell.ui.launchpad"  controllerName="s4tairlines.s4tairlines.controller.Airlines"
+    xmlns:table="sap.ui.table" 
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m">
+    <Page id="airlines" title="{i18n>title}">
+        <Button text="Open Debug" press="openDebugger"></Button>
+        <content>
+        <Table id="Companies" noDataText="NoData" items="{listTable>/}"> <!--- items="{S4TOData>/ScarrSet}" alternateRowColors="true">-->
+        <columns >
+            <Column width="auto">
+                <Label text="{i18n>CompanyName}"></Label>
+            </Column>
+            <Column width="auto">
+                <Label text="{i18n>Url}"></Label>
+            </Column>        
+            <Column width="auto">
+                <Label text="{i18n>ToSpfli}"></Label>
+            </Column>
+            <Column width="auto">
+                <Label text="Distance"></Label>
+            </Column>
+        </columns>
+        <items>
+        <ColumnListItem >
+            <cells >
+                <Text text="{listTable>Carrname}"></Text>
+                <Link text="{i18n>Url} {listTable>Carrid}" href="{listTable>Url}" target="_blank"></Link>
+                <Button icon="sap-icon://flight" id="toSpfli" press="toSpfliData" text="{listTable>Connection}"></Button>
+                <TextArea enabled="false" value="{listTable>Distance}"></TextArea>
+            </cells>
+        </ColumnListItem>
+        </items>
+        </Table>
+        </content>
+    </Page>
+</mvc:View>

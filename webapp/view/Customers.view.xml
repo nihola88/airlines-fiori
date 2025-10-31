@@ -1,0 +1,55 @@
+<mvc:View xmlns:smartfield="sap.ui.comp.smartfield" controllerName="s4tairlines.s4tairlines.controller.Customers" 
+    xmlns:common="sap.viz.ui5.controls.common" 
+    xmlns:f="sap.f" 
+    xmlns:smarttable="sap.ui.comp.smarttable" 
+    xmlns:sfb="sap.ui.comp.smartfilterbar" 
+    xmlns="sap.m" xmlns:mvc="sap.ui.core.mvc" 
+    xmlns:core="sap.ui.core" >
+	<Button press="openDebug" text="Open Debugger"/>
+	<f:DynamicPage fitContent="true" >
+		<f:header>
+			<f:DynamicPageHeader pinnable="false">
+				<sfb:SmartFilterBar id="smartFilterBar" 
+                                    entitySet="zFlScustom"
+                                    enableBasicSearch="false"
+                                    basicSearchFieldName="CustomerId"
+                                    showFilterConfiguration="true"
+                                    basicSearch=""
+                                    showAllFilters="true"
+                                    advancedMode="true"
+                                    persistencyKey="UniqueAndStablePersistencyKey"
+                                    isRunningInValueHelpDialog="true"
+                                    position="Left"
+                                    showGoOnFB="true"
+                                    showClearOnFB="true"
+                                    showMessages="true"
+                                    useToolbar="true">
+
+                <sfb:customData>
+                    <core:CustomData key="defaultFilterBarExpanded" value='{"Country":"true"}'></core:CustomData>
+                    <core:CustomData key="defaultShowAllFilters" value='{"Country":"true"}'/>
+                </sfb:customData>
+                </sfb:SmartFilterBar>
+			</f:DynamicPageHeader>
+		</f:header>
+		<f:content >
+			<smarttable:SmartTable id="smartFilterTab" 
+                                entitySet="zFlScustom" 
+                                smartFilterId="smartFilterBar"
+                                tableType="Table"
+                                enableAutoColumnWidth="true"
+                                width="100%"
+                                header="Customers"
+                                showRowCount="true"
+                                initiallyVisibleFields="CustomerId,Name,City,Country,Custtype,Discount,Email,Form,Langu,Postbox,Postcode,Region,Street,Telephone,Webuser"
+                                editable="true"
+                                showDetailsButton="true"
+                                showFullScreenButton="true"
+                                showTablePersonalisation="true"
+                                showVariantManagement="true">
+
+			</smarttable:SmartTable>
+		</f:content>
+	</f:DynamicPage>
+
+</mvc:View>

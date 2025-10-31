@@ -1,0 +1,24 @@
+<core:FragmentDefinition 
+    xmlns="sap.m" 
+    xmlns:core="sap.ui.core">
+    <Dialog id="frgScarr" title="Aggiungi Linea Aerea" draggable="true" resizable="true" titleAlignment="Center" >
+            <content>
+                <Input id="iCarrid" placeholder="Sigla Linea Aerea" value="{scarrModel>/Carrid}" change="onChangeCarrid" required="true"></Input>
+                <Input id="iCarrname" placeholder="Nome Linea Aerea" value="{scarrModel>/Carrname}" change="onChangeCarrname" required="true"></Input>
+                <ComboBox id="iCurrcode" change="onChangeCurrcode" required="true" placeholder="Valuta" 
+                    selectedKey="{scarrModel>/Currcode}" 
+                    items="{
+                        path:'S4TOData>/zTcurc', 
+                        sorter: { path: 'Currcode'},
+                        length: 500
+                        }">
+                        <core:Item key="{S4TOData>Currcode}" text="{S4TOData>Currcode}-{S4TOData>Text}" />
+                </ComboBox>
+                <Input id="iUrl" placeholder="Sito Web Linea Aerea" value="{scarrModel>/Url}"></Input>
+            </content>
+        <buttons>
+            <Button text="Save" press="onSaveScarr"></Button>
+            <Button text="Cancel" press="onCancelScarr"></Button>
+        </buttons>
+    </Dialog>
+</core:FragmentDefinition>

@@ -1,0 +1,137 @@
+<mvc:View id="Connections" controllerName="s4tairlines.s4tairlines.controller.Connections" xmlns:table="sap.ui.table" xmlns:mvc="sap.ui.core.mvc" xmlns:core="sap.ui.core" xmlns="sap.m" xmlns:l="sap.ui.layout" xmlns:messType="sap.ui.core.MessageType">
+	<SplitApp initialMaster="connection" initialDetail="connectionFlights" id="splitApp" mode="ShowHideMode">
+		<masterPages>
+			<Page id="connection" title="{i18n>titleConnections}">
+				<Button text="Open Debug" press="openDebugger"/>
+				<!--<l:HorizontalLayout > /!-->
+				<List id="connDet" width="100%">
+					<StandardListItem description="{spfli>/Carrid} - {spfli>/Connid}" titleTextDirection="RTL" title="Codice Volo" type="Navigation" press="onNavPress"/>
+					<StandardListItem description="{spfli>/Cityfrom}" title="Città di partenza" highlight="{sap.ui.core.MessageType.Error}"> </StandardListItem>
+					<StandardListItem description="{spfli>/Cityto}" title="Città di arrivo"/>
+					<StandardListItem description="{spfli>/DepTime}" title="Ora partenza"/>
+					<StandardListItem description="{spfli>/ArrTime}" title="Ora arrivo"/>
+				</List>
+				<!--</l:HorizontalLayout>/!-->
+			</Page>
+		</masterPages>
+		<detailPages>
+			<Page id="connectionFlights">
+				<Table id="flights" visible="false" items="{sflight>/}" alternateRowColors="true" fixedLayout="false" mode="MultiSelect" selectionChange="onSelectionChange" itemPress="onItemPress">
+					<headerToolbar>
+						<Toolbar>
+							<content>
+								<Button text="Aggiorna" press="onUpdate"/>
+								<Button text="Cancella" press="onDelete"/>
+								<Button text="Crea" press="onCreate"/>
+							</content>
+						</Toolbar>
+					</headerToolbar>
+					<columns>
+						<Column width="auto">
+							<layoutData>
+								<FlexItemData growFactor="0"/>
+							</layoutData>
+							<Label text="Data Volo"/>
+						</Column>
+						<Column width="auto">
+							<layoutData>
+								<FlexItemData growFactor="1"/>
+							</layoutData>
+							<Label text="Prezzo Volo"/>
+						</Column>
+						<Column width="auto">
+							<layoutData>
+								<FlexItemData growFactor="2"/>
+							</layoutData>
+							<Label text="Valuta"/>
+						</Column>
+						<Column width="auto">
+							<layoutData>
+								<FlexItemData growFactor="3"/>
+							</layoutData>
+							<Label text="Posti disponibili"/>
+						</Column>
+						<Column width="auto">
+							<layoutData>
+								<FlexItemData growFactor="4"/>
+							</layoutData>
+							<Label text="Posti Occupati"/>
+						</Column>
+						<Column width="auto">
+							<layoutData>
+								<FlexItemData growFactor="4"/>
+							</layoutData>
+							<Label text="Posti Liberi"/>
+						</Column>
+						<Column width="auto">
+							<layoutData>
+								<FlexItemData growFactor="5"/>
+							</layoutData>
+							<Label text=""> </Label>
+						</Column>
+					</columns>
+					<items>
+						<ColumnListItem id="items">
+							<cells>
+								<Text width="auto" text="{sflight>FlDate}"/>
+								<Text id="iPrice" text="{sflight>Price}"/>
+								<Input id="iCurr" name="iCurr" value="{sflight>Currency}" enabled="false" change="onChangeInput" type="Text"/>
+								<Text text="{sflight>Seatsmax}"/>
+								<Text text="{sflight>Seatsocc}" id="iSeatsOcc"/>
+								<Text text="{sflight>AvSeats}"/>
+								<core:Icon src="sap-icon://slim-arrow-right" press="onItemPress"/>
+							</cells>
+						</ColumnListItem>
+					</items>
+				</Table>
+			</Page>
+			<Page id="bookings" showNavButton="true" navButtonPress="onBackToFlights">
+				<!--<Table items="{
+   path: '{S4TOData>/ztest_flights_sbook}',
+   filters:[
+      {
+         path:'Carrid',
+         operator:'EQ',
+         value1:'{selFlight>Carrid}'
+      }
+   ]
+}" growing="true" growingDirection="Downwards" growingThreshold="20"> !-->
+				<!--<Table items="{S4TOData>/ztest_flights_sbook}" growing="true" growingDirection="Downwards" growingThreshold="20">!-->
+				<Table items="{sbook>/}" growing="true" growingDirection="Downwards" growingThreshold="20">
+					<columns>
+						<Column>
+							<Label text="Prenotazione"/>
+						</Column>
+						<Column>
+							<Label text="Cliente"/>
+						</Column>
+						<Column>
+							<Label text="Nome Passeggero"/>
+						</Column>
+						<Column>
+							<Label text="Data Ordine"/>
+						</Column>
+						<Column>
+							<Label text="Importo Pagato ({selFlight>/Currency})"/>
+						</Column>
+						<Column >
+							<Label text="Dettaglio Cliente"></Label>
+						</Column>
+					</columns>
+					<items>
+						<ColumnListItem>
+							<cells>
+								<Text text="{sbook>Bookid}"/>
+								<Button text="{sbook>Customid}" press="onCustomerIdPress"/>
+								<Text text="{sbook>Passname}"/>
+								<Text text="{sbook>OrderDate}"/>
+								<Text text="{sbook>Loccuram}"/>
+								<Button text=">" press="toCustomer"></Button>
+							</cells>
+						</ColumnListItem>
+					</items>
+				</Table>
+			</Page>
+		</detailPages>
+	</SplitApp>
+</mvc:View>

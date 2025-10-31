@@ -1,0 +1,38 @@
+<mvc:View xmlns:cards="sap.f.cards" xmlns:core="sap.ui.core" 
+    xmlns="sap.m" 
+    xmlns:mvc="sap.ui.core.mvc"
+    controllerName="s4tairlines.s4tairlines.controller.Customer">
+<Page id="Customer">
+    <content>
+    <Button text="Open Debugger" press="onOpenDebug"></Button>
+<HeaderContainer >
+    <cards:Header title="Customer {customerData>/CustomerId}"></cards:Header></HeaderContainer>
+    <HBox >
+
+    <List id="customerList" backgroundDesign="Translucent">
+
+    <StandardListItem title="Nome: {customerData>/Form} {customerData>/Name}" type="Inactive" icon="sap-icon://person-placeholder"
+        info="Dettaglio Cliente" infoState="Success" infoStateInverted="true" iconInset="true" adaptTitleSize="true"
+        highlightText="true" unread="true" wrapCharLimit="1" selected="true"></StandardListItem> 
+    <CustomListItem>
+        <Label text="Indirizzo" width="100px" textAlign="Left"></Label>
+        <Text text="{customerData>/Street}, {customerData>/Postcode}-{customerData>/City} ({customerData>/Country})"></Text>
+    </CustomListItem>
+        <CustomListItem>
+        <Label text="Telefono" width="100px" textAlign="Left"></Label>
+        <Text text="{customerData>/Telephone}"></Text>
+    </CustomListItem>
+    <CustomListItem >
+        <Label text="Email" width="100px" textAlign="Left"></Label>
+        <Text text="{customerData>/Email}"></Text>
+    </CustomListItem>
+
+    <CustomListItem >
+        <Label text="Valutazione Volo"></Label>
+        <RatingIndicator editable="true" id="rating" value="{selSBookToCustomer>/Rating}" maxValue="10" change="onChangeRating"></RatingIndicator>
+    </CustomListItem>
+    </List>
+    </HBox>
+    </content>
+</Page>
+</mvc:View>
